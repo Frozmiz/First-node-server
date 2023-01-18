@@ -25,7 +25,20 @@ server.use(express.urlencoded({extended: true}));
 server.use("/teachers", teacherRoutes); //Todo lo que empiece por "/teachers" me lo rediriges a teacherRoutes.
 server.use("/", indexRoutes);
 
+// CONTROL DE ERRORES
 
+// Por aqui pasarán todas las rutas que no existan
+// Si no hacen match en las rutas previas, llegarán aqui y harán match con asterisco.
+server.use("*", (req, res, next) => {
+    return res.status(404).json("No se encuentra la URL, Prueba con otra URL");
+})
+
+// Controlador de errores
+server.use((error, req, res, next) => {
+    const status = error.status || 500;
+    const message = error.message || "Unexpected Error!";
+    return res.status(status).json(message);
+});
 
 server.listen(PORT, () => {
     console.log(`Server listening on http://localhost:${PORT}/`);
