@@ -27,11 +27,12 @@ const createPost = async (req, res, next) => {
 
 const editPut = async(req, res, next) => {
     try {
-        const {id} = req.params;
+        const {id} = req.params; // req.params.id
         const fields = {...req.body};
-        const options = {new: true};
-
-        return Teacher.findByIdAndUpdate(id, fields, options);
+        const options = {new: true}; // Mongoose primero actualiza y luego te envia la respuesta actualizada. (ponerlo siempre que vayamos a editar).
+        
+        const edited = await Teacher.findByIdAndUpdate(id, fields, options);
+        return res.status(200).json(edited);
     } 
     catch (error) {
         res.status(error.status || 500).json(error.message);
