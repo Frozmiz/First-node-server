@@ -2,9 +2,12 @@
 // importo el modulo teacher.model
 const Teacher = require("./teacher.model");
 
-const indexGet = (req, res, next) => {
-    return res.status(200).json("OK, teachers router working");
+const indexGet = async(req, res, next) => {
+    const teachers = await Teacher.find();
+    // Devolvemos los profesores de la base de datos.
+    return res.status(200).json(teachers);
 };
+
 
 const createPost = async (req, res, next) => {
     try {
@@ -20,6 +23,7 @@ const createPost = async (req, res, next) => {
         return res.status(500).json(error.message);
     }
 };
+
 
 const editPut = async(req, res, next) => {
     try {
