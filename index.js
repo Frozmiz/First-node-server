@@ -8,6 +8,7 @@ db.connectDB();
 // Rutas importadas
 const indexRoutes = require("./src/api/index/index.routes")
 const teacherRoutes = require("./src/api/teachers/teacher.routes")
+const courseBlocksRoutes = require("./src/api/course-blocks/courseBlocks.routes")
 
 const PORT = 3000;
 
@@ -23,6 +24,8 @@ server.use(express.urlencoded({extended: true}));
 
 // Configuración de todas las rutas de nuestro servidor.
 server.use("/teachers", teacherRoutes); //Todo lo que empiece por "/teachers" me lo rediriges a teacherRoutes.
+// Las rutas las crearemos con guiones medios, a diferencia del modelo que será en base de datos course_blocks
+server.use("/course-blocks", courseBlocksRoutes);
 server.use("/", indexRoutes);
 
 // CONTROL DE ERRORES

@@ -47,7 +47,7 @@ const editPut = async(req, res, next) => {
     catch (error) {
         res.status(error.status || 500).json(error.message);
     }
-}
+};
 
 
 const deleTeacher = async(req, res, next) => {
@@ -71,4 +71,4 @@ module.exports = {
     createPost,
     editPut,
     deleTeacher,
-}
+};
