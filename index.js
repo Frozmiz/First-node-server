@@ -9,6 +9,13 @@ db.connectDB();
 const indexRoutes = require("./src/api/index/index.routes")
 const teacherRoutes = require("./src/api/teachers/teacher.routes")
 const courseBlocksRoutes = require("./src/api/course-blocks/courseBlocks.routes")
+const usersRoutes = require("./src/api/users/user.routes");
+
+// AUTENTICACIÓN 
+const passport = require("passport");
+const auth = require("./src/utils/auth/index");
+auth.TurnOnAuth();
+
 
 const PORT = 3000;
 
@@ -21,11 +28,16 @@ server.use(express.json());
 // Los POST de formulario llegaran como url.encode y hay que transformalas
 server.use(express.urlencoded({extended: true}));
 
+// AUTENTICACIÓN! //
+
+server.use(passport.initialize());
+
 
 // Configuración de todas las rutas de nuestro servidor.
 server.use("/teachers", teacherRoutes); //Todo lo que empiece por "/teachers" me lo rediriges a teacherRoutes.
 // Las rutas las crearemos con guiones medios, a diferencia del modelo que será en base de datos course_blocks
 server.use("/course-blocks", courseBlocksRoutes);
+server.use("/users", usersRoutes);
 server.use("/", indexRoutes);
 
 // CONTROL DE ERRORES
